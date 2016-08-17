@@ -1,0 +1,2720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="socialnetwork" default="all">
+  
+  
+  <property file="socialnetwork.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.ear"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.maven:_junit:junit:4.12.classpath">
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.mockito:mockito-all:1.9.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/mockito/mockito-all/1.9.5/mockito-all-1.9.5.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module accounts-database -->
+  
+  <dirname property="module.accounts-database.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.accounts-database" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="accounts-database.output.dir" value="${module.accounts-database.basedir}/accounts-database/target/classes"/>
+  <property name="accounts-database.testoutput.dir" value="${module.accounts-database.basedir}/accounts-database/target/test-classes"/>
+  
+  <path id="accounts-database.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="accounts-database.module.production.classpath"/>
+  
+  <path id="accounts-database.runtime.production.module.classpath">
+    <pathelement location="${accounts-database.output.dir}"/>
+  </path>
+  
+  <path id="accounts-database.module.classpath">
+    <pathelement location="${accounts-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="accounts-database.runtime.module.classpath">
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.accounts-database">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.accounts-database">
+    <patternset refid="excluded.from.module.accounts-database"/>
+  </patternset>
+  
+  <path id="accounts-database.module.sourcepath">
+    <dirset dir="${module.accounts-database.basedir}/accounts-database">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="accounts-database.module.test.sourcepath">
+    <dirset dir="${module.accounts-database.basedir}/accounts-database">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.accounts-database" depends="compile.module.accounts-database.production,compile.module.accounts-database.tests" description="Compile module accounts-database"/>
+  
+  <target name="compile.module.accounts-database.production" description="Compile module accounts-database; production classes">
+    <mkdir dir="${accounts-database.output.dir}"/>
+    <javac destdir="${accounts-database.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.accounts-database}"/>
+      <bootclasspath refid="accounts-database.module.bootclasspath"/>
+      <classpath refid="accounts-database.module.production.classpath"/>
+      <src refid="accounts-database.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.accounts-database"/>
+    </javac>
+    
+    <copy todir="${accounts-database.output.dir}">
+      <fileset dir="${module.accounts-database.basedir}/accounts-database/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.accounts-database.basedir}/accounts-database/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.accounts-database.tests" depends="compile.module.accounts-database.production" description="compile module accounts-database; test classes" unless="skip.tests">
+    <mkdir dir="${accounts-database.testoutput.dir}"/>
+    <javac destdir="${accounts-database.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.accounts-database}"/>
+      <bootclasspath refid="accounts-database.module.bootclasspath"/>
+      <classpath refid="accounts-database.module.classpath"/>
+      <src refid="accounts-database.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.accounts-database"/>
+    </javac>
+    
+    <copy todir="${accounts-database.testoutput.dir}">
+      <fileset dir="${module.accounts-database.basedir}/accounts-database/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.accounts-database" description="cleanup module">
+    <delete dir="${accounts-database.output.dir}"/>
+    <delete dir="${accounts-database.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module applications-database -->
+  
+  <dirname property="module.applications-database.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.applications-database" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="applications-database.output.dir" value="${module.applications-database.basedir}/applications-database/target/classes"/>
+  <property name="applications-database.testoutput.dir" value="${module.applications-database.basedir}/applications-database/target/test-classes"/>
+  
+  <path id="applications-database.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="applications-database.module.production.classpath"/>
+  
+  <path id="applications-database.runtime.production.module.classpath">
+    <pathelement location="${applications-database.output.dir}"/>
+  </path>
+  
+  <path id="applications-database.module.classpath">
+    <pathelement location="${applications-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="applications-database.runtime.module.classpath">
+    <pathelement location="${applications-database.testoutput.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.applications-database">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.applications-database">
+    <patternset refid="excluded.from.module.applications-database"/>
+  </patternset>
+  
+  <path id="applications-database.module.sourcepath">
+    <dirset dir="${module.applications-database.basedir}/applications-database">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="applications-database.module.test.sourcepath">
+    <dirset dir="${module.applications-database.basedir}/applications-database">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.applications-database" depends="compile.module.applications-database.production,compile.module.applications-database.tests" description="Compile module applications-database"/>
+  
+  <target name="compile.module.applications-database.production" description="Compile module applications-database; production classes">
+    <mkdir dir="${applications-database.output.dir}"/>
+    <javac destdir="${applications-database.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.applications-database}"/>
+      <bootclasspath refid="applications-database.module.bootclasspath"/>
+      <classpath refid="applications-database.module.production.classpath"/>
+      <src refid="applications-database.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.applications-database"/>
+    </javac>
+    
+    <copy todir="${applications-database.output.dir}">
+      <fileset dir="${module.applications-database.basedir}/applications-database/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.applications-database.basedir}/applications-database/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.applications-database.tests" depends="compile.module.applications-database.production" description="compile module applications-database; test classes" unless="skip.tests">
+    <mkdir dir="${applications-database.testoutput.dir}"/>
+    <javac destdir="${applications-database.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.applications-database}"/>
+      <bootclasspath refid="applications-database.module.bootclasspath"/>
+      <classpath refid="applications-database.module.classpath"/>
+      <src refid="applications-database.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.applications-database"/>
+    </javac>
+    
+    <copy todir="${applications-database.testoutput.dir}">
+      <fileset dir="${module.applications-database.basedir}/applications-database/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.applications-database" description="cleanup module">
+    <delete dir="${applications-database.output.dir}"/>
+    <delete dir="${applications-database.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module multimedia-database -->
+  
+  <dirname property="module.multimedia-database.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.multimedia-database" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="multimedia-database.output.dir" value="${module.multimedia-database.basedir}/multimedia-database/target/classes"/>
+  <property name="multimedia-database.testoutput.dir" value="${module.multimedia-database.basedir}/multimedia-database/target/test-classes"/>
+  
+  <path id="multimedia-database.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="multimedia-database.module.production.classpath"/>
+  
+  <path id="multimedia-database.runtime.production.module.classpath">
+    <pathelement location="${multimedia-database.output.dir}"/>
+  </path>
+  
+  <path id="multimedia-database.module.classpath">
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="multimedia-database.runtime.module.classpath">
+    <pathelement location="${multimedia-database.testoutput.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.multimedia-database">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.multimedia-database">
+    <patternset refid="excluded.from.module.multimedia-database"/>
+  </patternset>
+  
+  <path id="multimedia-database.module.sourcepath">
+    <dirset dir="${module.multimedia-database.basedir}/multimedia-database">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="multimedia-database.module.test.sourcepath">
+    <dirset dir="${module.multimedia-database.basedir}/multimedia-database">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.multimedia-database" depends="compile.module.multimedia-database.production,compile.module.multimedia-database.tests" description="Compile module multimedia-database"/>
+  
+  <target name="compile.module.multimedia-database.production" description="Compile module multimedia-database; production classes">
+    <mkdir dir="${multimedia-database.output.dir}"/>
+    <javac destdir="${multimedia-database.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.multimedia-database}"/>
+      <bootclasspath refid="multimedia-database.module.bootclasspath"/>
+      <classpath refid="multimedia-database.module.production.classpath"/>
+      <src refid="multimedia-database.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.multimedia-database"/>
+    </javac>
+    
+    <copy todir="${multimedia-database.output.dir}">
+      <fileset dir="${module.multimedia-database.basedir}/multimedia-database/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.multimedia-database.basedir}/multimedia-database/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.multimedia-database.tests" depends="compile.module.multimedia-database.production" description="compile module multimedia-database; test classes" unless="skip.tests">
+    <mkdir dir="${multimedia-database.testoutput.dir}"/>
+    <javac destdir="${multimedia-database.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.multimedia-database}"/>
+      <bootclasspath refid="multimedia-database.module.bootclasspath"/>
+      <classpath refid="multimedia-database.module.classpath"/>
+      <src refid="multimedia-database.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.multimedia-database"/>
+    </javac>
+    
+    <copy todir="${multimedia-database.testoutput.dir}">
+      <fileset dir="${module.multimedia-database.basedir}/multimedia-database/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.multimedia-database" description="cleanup module">
+    <delete dir="${multimedia-database.output.dir}"/>
+    <delete dir="${multimedia-database.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module profiles-database -->
+  
+  <dirname property="module.profiles-database.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.profiles-database" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="profiles-database.output.dir" value="${module.profiles-database.basedir}/profiles-database/target/classes"/>
+  <property name="profiles-database.testoutput.dir" value="${module.profiles-database.basedir}/profiles-database/target/test-classes"/>
+  
+  <path id="profiles-database.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="profiles-database.module.production.classpath"/>
+  
+  <path id="profiles-database.runtime.production.module.classpath">
+    <pathelement location="${profiles-database.output.dir}"/>
+  </path>
+  
+  <path id="profiles-database.module.classpath">
+    <pathelement location="${profiles-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="profiles-database.runtime.module.classpath">
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.profiles-database">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.profiles-database">
+    <patternset refid="excluded.from.module.profiles-database"/>
+  </patternset>
+  
+  <path id="profiles-database.module.sourcepath">
+    <dirset dir="${module.profiles-database.basedir}/profiles-database">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="profiles-database.module.test.sourcepath">
+    <dirset dir="${module.profiles-database.basedir}/profiles-database">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.profiles-database" depends="compile.module.profiles-database.production,compile.module.profiles-database.tests" description="Compile module profiles-database"/>
+  
+  <target name="compile.module.profiles-database.production" description="Compile module profiles-database; production classes">
+    <mkdir dir="${profiles-database.output.dir}"/>
+    <javac destdir="${profiles-database.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.profiles-database}"/>
+      <bootclasspath refid="profiles-database.module.bootclasspath"/>
+      <classpath refid="profiles-database.module.production.classpath"/>
+      <src refid="profiles-database.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.profiles-database"/>
+    </javac>
+    
+    <copy todir="${profiles-database.output.dir}">
+      <fileset dir="${module.profiles-database.basedir}/profiles-database/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.profiles-database.basedir}/profiles-database/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.profiles-database.tests" depends="compile.module.profiles-database.production" description="compile module profiles-database; test classes" unless="skip.tests">
+    <mkdir dir="${profiles-database.testoutput.dir}"/>
+    <javac destdir="${profiles-database.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.profiles-database}"/>
+      <bootclasspath refid="profiles-database.module.bootclasspath"/>
+      <classpath refid="profiles-database.module.classpath"/>
+      <src refid="profiles-database.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.profiles-database"/>
+    </javac>
+    
+    <copy todir="${profiles-database.testoutput.dir}">
+      <fileset dir="${module.profiles-database.basedir}/profiles-database/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.profiles-database" description="cleanup module">
+    <delete dir="${profiles-database.output.dir}"/>
+    <delete dir="${profiles-database.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module socialNetwork -->
+  
+  <dirname property="module.socialnetwork.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.socialnetwork" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="socialnetwork.output.dir" value="${module.socialnetwork.basedir}/target/classes"/>
+  <property name="socialnetwork.testoutput.dir" value="${module.socialnetwork.basedir}/target/test-classes"/>
+  
+  <path id="socialnetwork.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="socialnetwork.module.production.classpath"/>
+  
+  <path id="socialnetwork.runtime.production.module.classpath">
+    <pathelement location="${socialnetwork.output.dir}"/>
+  </path>
+  
+  <path id="socialnetwork.module.classpath">
+    <pathelement location="${socialnetwork.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="socialnetwork.runtime.module.classpath">
+    <pathelement location="${socialnetwork.testoutput.dir}"/>
+    <pathelement location="${socialnetwork.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.socialnetwork">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.socialnetwork">
+    <patternset refid="excluded.from.module.socialnetwork"/>
+  </patternset>
+  
+  
+  <target name="compile.module.socialnetwork" depends="compile.module.socialnetwork.production,compile.module.socialnetwork.tests" description="Compile module socialNetwork"/>
+  
+  <target name="compile.module.socialnetwork.production" description="Compile module socialNetwork; production classes"/>
+  
+  <target name="compile.module.socialnetwork.tests" depends="compile.module.socialnetwork.production" description="compile module socialNetwork; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.socialnetwork" description="cleanup module">
+    <delete dir="${socialnetwork.output.dir}"/>
+    <delete dir="${socialnetwork.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module talking-database -->
+  
+  <dirname property="module.talking-database.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.talking-database" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="talking-database.output.dir" value="${module.talking-database.basedir}/talking-database/target/classes"/>
+  <property name="talking-database.testoutput.dir" value="${module.talking-database.basedir}/talking-database/target/test-classes"/>
+  
+  <path id="talking-database.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="talking-database.module.production.classpath"/>
+  
+  <path id="talking-database.runtime.production.module.classpath">
+    <pathelement location="${talking-database.output.dir}"/>
+  </path>
+  
+  <path id="talking-database.module.classpath">
+    <pathelement location="${talking-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="talking-database.runtime.module.classpath">
+    <pathelement location="${talking-database.testoutput.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.talking-database">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.talking-database">
+    <patternset refid="excluded.from.module.talking-database"/>
+  </patternset>
+  
+  <path id="talking-database.module.sourcepath">
+    <dirset dir="${module.talking-database.basedir}/talking-database">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="talking-database.module.test.sourcepath">
+    <dirset dir="${module.talking-database.basedir}/talking-database">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.talking-database" depends="compile.module.talking-database.production,compile.module.talking-database.tests" description="Compile module talking-database"/>
+  
+  <target name="compile.module.talking-database.production" description="Compile module talking-database; production classes">
+    <mkdir dir="${talking-database.output.dir}"/>
+    <javac destdir="${talking-database.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.talking-database}"/>
+      <bootclasspath refid="talking-database.module.bootclasspath"/>
+      <classpath refid="talking-database.module.production.classpath"/>
+      <src refid="talking-database.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.talking-database"/>
+    </javac>
+    
+    <copy todir="${talking-database.output.dir}">
+      <fileset dir="${module.talking-database.basedir}/talking-database/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.talking-database.basedir}/talking-database/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.talking-database.tests" depends="compile.module.talking-database.production" description="compile module talking-database; test classes" unless="skip.tests">
+    <mkdir dir="${talking-database.testoutput.dir}"/>
+    <javac destdir="${talking-database.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.talking-database}"/>
+      <bootclasspath refid="talking-database.module.bootclasspath"/>
+      <classpath refid="talking-database.module.classpath"/>
+      <src refid="talking-database.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.talking-database"/>
+    </javac>
+    
+    <copy todir="${talking-database.testoutput.dir}">
+      <fileset dir="${module.talking-database.basedir}/talking-database/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.talking-database" description="cleanup module">
+    <delete dir="${talking-database.output.dir}"/>
+    <delete dir="${talking-database.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module account-server -->
+  
+  <dirname property="module.account-server.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.account-server" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="account-server.output.dir" value="${module.account-server.basedir}/account-server/target/classes"/>
+  <property name="account-server.testoutput.dir" value="${module.account-server.basedir}/account-server/target/test-classes"/>
+  
+  <path id="account-server.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="account-server.module.production.classpath">
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+  </path>
+  
+  <path id="account-server.runtime.production.module.classpath">
+    <pathelement location="${account-server.output.dir}"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="account-server.module.classpath">
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="account-server.runtime.module.classpath">
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.account-server">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.account-server">
+    <patternset refid="excluded.from.module.account-server"/>
+  </patternset>
+  
+  <path id="account-server.module.sourcepath">
+    <dirset dir="${module.account-server.basedir}/account-server">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="account-server.module.test.sourcepath">
+    <dirset dir="${module.account-server.basedir}/account-server">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.account-server" depends="compile.module.account-server.production,compile.module.account-server.tests" description="Compile module account-server"/>
+  
+  <target name="compile.module.account-server.production" depends="compile.module.accounts-database,compile.module.profiles-database" description="Compile module account-server; production classes">
+    <mkdir dir="${account-server.output.dir}"/>
+    <javac destdir="${account-server.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.account-server}"/>
+      <bootclasspath refid="account-server.module.bootclasspath"/>
+      <classpath refid="account-server.module.production.classpath"/>
+      <src refid="account-server.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.account-server"/>
+    </javac>
+    
+    <copy todir="${account-server.output.dir}">
+      <fileset dir="${module.account-server.basedir}/account-server/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.account-server.basedir}/account-server/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.account-server.tests" depends="compile.module.account-server.production" description="compile module account-server; test classes" unless="skip.tests">
+    <mkdir dir="${account-server.testoutput.dir}"/>
+    <javac destdir="${account-server.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.account-server}"/>
+      <bootclasspath refid="account-server.module.bootclasspath"/>
+      <classpath refid="account-server.module.classpath"/>
+      <src refid="account-server.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.account-server"/>
+    </javac>
+    
+    <copy todir="${account-server.testoutput.dir}">
+      <fileset dir="${module.account-server.basedir}/account-server/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.account-server" description="cleanup module">
+    <delete dir="${account-server.output.dir}"/>
+    <delete dir="${account-server.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module content-server -->
+  
+  <dirname property="module.content-server.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.content-server" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="content-server.output.dir" value="${module.content-server.basedir}/content-server/target/classes"/>
+  <property name="content-server.testoutput.dir" value="${module.content-server.basedir}/content-server/target/test-classes"/>
+  
+  <path id="content-server.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="content-server.module.production.classpath">
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+  </path>
+  
+  <path id="content-server.runtime.production.module.classpath">
+    <pathelement location="${content-server.output.dir}"/>
+    <path refid="applications-database.runtime.production.module.classpath"/>
+    <path refid="multimedia-database.runtime.production.module.classpath"/>
+    <path refid="talking-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="content-server.module.classpath">
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.testoutput.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.testoutput.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.testoutput.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="content-server.runtime.module.classpath">
+    <pathelement location="${content-server.testoutput.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <path refid="applications-database.runtime.module.classpath"/>
+    <path refid="multimedia-database.runtime.module.classpath"/>
+    <path refid="talking-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.content-server">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.content-server">
+    <patternset refid="excluded.from.module.content-server"/>
+  </patternset>
+  
+  <path id="content-server.module.sourcepath">
+    <dirset dir="${module.content-server.basedir}/content-server">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="content-server.module.test.sourcepath">
+    <dirset dir="${module.content-server.basedir}/content-server">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.content-server" depends="compile.module.content-server.production,compile.module.content-server.tests" description="Compile module content-server"/>
+  
+  <target name="compile.module.content-server.production" depends="compile.module.applications-database,compile.module.multimedia-database,compile.module.talking-database" description="Compile module content-server; production classes">
+    <mkdir dir="${content-server.output.dir}"/>
+    <javac destdir="${content-server.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.content-server}"/>
+      <bootclasspath refid="content-server.module.bootclasspath"/>
+      <classpath refid="content-server.module.production.classpath"/>
+      <src refid="content-server.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.content-server"/>
+    </javac>
+    
+    <copy todir="${content-server.output.dir}">
+      <fileset dir="${module.content-server.basedir}/content-server/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.content-server.basedir}/content-server/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.content-server.tests" depends="compile.module.content-server.production" description="compile module content-server; test classes" unless="skip.tests">
+    <mkdir dir="${content-server.testoutput.dir}"/>
+    <javac destdir="${content-server.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.content-server}"/>
+      <bootclasspath refid="content-server.module.bootclasspath"/>
+      <classpath refid="content-server.module.classpath"/>
+      <src refid="content-server.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.content-server"/>
+    </javac>
+    
+    <copy todir="${content-server.testoutput.dir}">
+      <fileset dir="${module.content-server.basedir}/content-server/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.content-server" description="cleanup module">
+    <delete dir="${content-server.output.dir}"/>
+    <delete dir="${content-server.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module authentication-service -->
+  
+  <dirname property="module.authentication-service.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.authentication-service" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="authentication-service.output.dir" value="${module.authentication-service.basedir}/authentication-service/target/classes"/>
+  <property name="authentication-service.testoutput.dir" value="${module.authentication-service.basedir}/authentication-service/target/test-classes"/>
+  
+  <path id="authentication-service.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="authentication-service.module.production.classpath">
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+  </path>
+  
+  <path id="authentication-service.runtime.production.module.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="authentication-service.module.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="authentication-service.runtime.module.classpath">
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.authentication-service">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.authentication-service">
+    <patternset refid="excluded.from.module.authentication-service"/>
+  </patternset>
+  
+  <path id="authentication-service.module.sourcepath">
+    <dirset dir="${module.authentication-service.basedir}/authentication-service">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="authentication-service.module.test.sourcepath">
+    <dirset dir="${module.authentication-service.basedir}/authentication-service">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.authentication-service" depends="compile.module.authentication-service.production,compile.module.authentication-service.tests" description="Compile module authentication-service"/>
+  
+  <target name="compile.module.authentication-service.production" depends="compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database" description="Compile module authentication-service; production classes">
+    <mkdir dir="${authentication-service.output.dir}"/>
+    <javac destdir="${authentication-service.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.authentication-service}"/>
+      <bootclasspath refid="authentication-service.module.bootclasspath"/>
+      <classpath refid="authentication-service.module.production.classpath"/>
+      <src refid="authentication-service.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.authentication-service"/>
+    </javac>
+    
+    <copy todir="${authentication-service.output.dir}">
+      <fileset dir="${module.authentication-service.basedir}/authentication-service/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.authentication-service.basedir}/authentication-service/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.authentication-service.tests" depends="compile.module.authentication-service.production" description="compile module authentication-service; test classes" unless="skip.tests">
+    <mkdir dir="${authentication-service.testoutput.dir}"/>
+    <javac destdir="${authentication-service.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.authentication-service}"/>
+      <bootclasspath refid="authentication-service.module.bootclasspath"/>
+      <classpath refid="authentication-service.module.classpath"/>
+      <src refid="authentication-service.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.authentication-service"/>
+    </javac>
+    
+    <copy todir="${authentication-service.testoutput.dir}">
+      <fileset dir="${module.authentication-service.basedir}/authentication-service/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.authentication-service" description="cleanup module">
+    <delete dir="${authentication-service.output.dir}"/>
+    <delete dir="${authentication-service.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module authorization-service -->
+  
+  <dirname property="module.authorization-service.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.authorization-service" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="authorization-service.output.dir" value="${module.authorization-service.basedir}/authorization-service/target/classes"/>
+  <property name="authorization-service.testoutput.dir" value="${module.authorization-service.basedir}/authorization-service/target/test-classes"/>
+  
+  <path id="authorization-service.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="authorization-service.module.production.classpath">
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+  </path>
+  
+  <path id="authorization-service.runtime.production.module.classpath">
+    <pathelement location="${authorization-service.output.dir}"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="authorization-service.module.classpath">
+    <pathelement location="${authorization-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="authorization-service.runtime.module.classpath">
+    <pathelement location="${authorization-service.testoutput.dir}"/>
+    <pathelement location="${authorization-service.output.dir}"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.authorization-service">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.authorization-service">
+    <patternset refid="excluded.from.module.authorization-service"/>
+  </patternset>
+  
+  <path id="authorization-service.module.sourcepath">
+    <dirset dir="${module.authorization-service.basedir}/authorization-service">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="authorization-service.module.test.sourcepath">
+    <dirset dir="${module.authorization-service.basedir}/authorization-service">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.authorization-service" depends="compile.module.authorization-service.production,compile.module.authorization-service.tests" description="Compile module authorization-service"/>
+  
+  <target name="compile.module.authorization-service.production" depends="compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database" description="Compile module authorization-service; production classes">
+    <mkdir dir="${authorization-service.output.dir}"/>
+    <javac destdir="${authorization-service.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.authorization-service}"/>
+      <bootclasspath refid="authorization-service.module.bootclasspath"/>
+      <classpath refid="authorization-service.module.production.classpath"/>
+      <src refid="authorization-service.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.authorization-service"/>
+    </javac>
+    
+    <copy todir="${authorization-service.output.dir}">
+      <fileset dir="${module.authorization-service.basedir}/authorization-service/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.authorization-service.basedir}/authorization-service/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.authorization-service.tests" depends="compile.module.authorization-service.production" description="compile module authorization-service; test classes" unless="skip.tests">
+    <mkdir dir="${authorization-service.testoutput.dir}"/>
+    <javac destdir="${authorization-service.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.authorization-service}"/>
+      <bootclasspath refid="authorization-service.module.bootclasspath"/>
+      <classpath refid="authorization-service.module.classpath"/>
+      <src refid="authorization-service.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.authorization-service"/>
+    </javac>
+    
+    <copy todir="${authorization-service.testoutput.dir}">
+      <fileset dir="${module.authorization-service.basedir}/authorization-service/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.authorization-service" description="cleanup module">
+    <delete dir="${authorization-service.output.dir}"/>
+    <delete dir="${authorization-service.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module applications-service -->
+  
+  <dirname property="module.applications-service.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.applications-service" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="applications-service.output.dir" value="${module.applications-service.basedir}/applications-service/target/classes"/>
+  <property name="applications-service.testoutput.dir" value="${module.applications-service.basedir}/applications-service/target/test-classes"/>
+  
+  <path id="applications-service.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="applications-service.module.production.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+  </path>
+  
+  <path id="applications-service.runtime.production.module.classpath">
+    <pathelement location="${applications-service.output.dir}"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+    <path refid="content-server.runtime.production.module.classpath"/>
+    <path refid="applications-database.runtime.production.module.classpath"/>
+    <path refid="multimedia-database.runtime.production.module.classpath"/>
+    <path refid="talking-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="applications-service.module.classpath">
+    <pathelement location="${applications-service.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${content-server.testoutput.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.testoutput.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.testoutput.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.testoutput.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="applications-service.runtime.module.classpath">
+    <pathelement location="${applications-service.testoutput.dir}"/>
+    <pathelement location="${applications-service.output.dir}"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="content-server.runtime.module.classpath"/>
+    <path refid="applications-database.runtime.module.classpath"/>
+    <path refid="multimedia-database.runtime.module.classpath"/>
+    <path refid="talking-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.applications-service">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.applications-service">
+    <patternset refid="excluded.from.module.applications-service"/>
+  </patternset>
+  
+  <path id="applications-service.module.sourcepath">
+    <dirset dir="${module.applications-service.basedir}/applications-service">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="applications-service.module.test.sourcepath">
+    <dirset dir="${module.applications-service.basedir}/applications-service">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.applications-service" depends="compile.module.applications-service.production,compile.module.applications-service.tests" description="Compile module applications-service"/>
+  
+  <target name="compile.module.applications-service.production" depends="compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database,compile.module.content-server,compile.module.applications-database,compile.module.multimedia-database,compile.module.talking-database" description="Compile module applications-service; production classes">
+    <mkdir dir="${applications-service.output.dir}"/>
+    <javac destdir="${applications-service.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.applications-service}"/>
+      <bootclasspath refid="applications-service.module.bootclasspath"/>
+      <classpath refid="applications-service.module.production.classpath"/>
+      <src refid="applications-service.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.applications-service"/>
+    </javac>
+    
+    <copy todir="${applications-service.output.dir}">
+      <fileset dir="${module.applications-service.basedir}/applications-service/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.applications-service.basedir}/applications-service/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.applications-service.tests" depends="compile.module.applications-service.production" description="compile module applications-service; test classes" unless="skip.tests">
+    <mkdir dir="${applications-service.testoutput.dir}"/>
+    <javac destdir="${applications-service.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.applications-service}"/>
+      <bootclasspath refid="applications-service.module.bootclasspath"/>
+      <classpath refid="applications-service.module.classpath"/>
+      <src refid="applications-service.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.applications-service"/>
+    </javac>
+    
+    <copy todir="${applications-service.testoutput.dir}">
+      <fileset dir="${module.applications-service.basedir}/applications-service/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.applications-service" description="cleanup module">
+    <delete dir="${applications-service.output.dir}"/>
+    <delete dir="${applications-service.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module content-view-service -->
+  
+  <dirname property="module.content-view-service.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.content-view-service" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="content-view-service.output.dir" value="${module.content-view-service.basedir}/content-view-service/target/classes"/>
+  <property name="content-view-service.testoutput.dir" value="${module.content-view-service.basedir}/content-view-service/target/test-classes"/>
+  
+  <path id="content-view-service.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="content-view-service.module.production.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+  </path>
+  
+  <path id="content-view-service.runtime.production.module.classpath">
+    <pathelement location="${content-view-service.output.dir}"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+    <path refid="content-server.runtime.production.module.classpath"/>
+    <path refid="applications-database.runtime.production.module.classpath"/>
+    <path refid="multimedia-database.runtime.production.module.classpath"/>
+    <path refid="talking-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="content-view-service.module.classpath">
+    <pathelement location="${content-view-service.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${content-server.testoutput.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.testoutput.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.testoutput.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.testoutput.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="content-view-service.runtime.module.classpath">
+    <pathelement location="${content-view-service.testoutput.dir}"/>
+    <pathelement location="${content-view-service.output.dir}"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="content-server.runtime.module.classpath"/>
+    <path refid="applications-database.runtime.module.classpath"/>
+    <path refid="multimedia-database.runtime.module.classpath"/>
+    <path refid="talking-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.content-view-service">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.content-view-service">
+    <patternset refid="excluded.from.module.content-view-service"/>
+  </patternset>
+  
+  <path id="content-view-service.module.sourcepath">
+    <dirset dir="${module.content-view-service.basedir}/content-view-service">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="content-view-service.module.test.sourcepath">
+    <dirset dir="${module.content-view-service.basedir}/content-view-service">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.content-view-service" depends="compile.module.content-view-service.production,compile.module.content-view-service.tests" description="Compile module content-view-service"/>
+  
+  <target name="compile.module.content-view-service.production" depends="compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database,compile.module.content-server,compile.module.applications-database,compile.module.multimedia-database,compile.module.talking-database" description="Compile module content-view-service; production classes">
+    <mkdir dir="${content-view-service.output.dir}"/>
+    <javac destdir="${content-view-service.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.content-view-service}"/>
+      <bootclasspath refid="content-view-service.module.bootclasspath"/>
+      <classpath refid="content-view-service.module.production.classpath"/>
+      <src refid="content-view-service.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.content-view-service"/>
+    </javac>
+    
+    <copy todir="${content-view-service.output.dir}">
+      <fileset dir="${module.content-view-service.basedir}/content-view-service/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.content-view-service.basedir}/content-view-service/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.content-view-service.tests" depends="compile.module.content-view-service.production" description="compile module content-view-service; test classes" unless="skip.tests">
+    <mkdir dir="${content-view-service.testoutput.dir}"/>
+    <javac destdir="${content-view-service.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.content-view-service}"/>
+      <bootclasspath refid="content-view-service.module.bootclasspath"/>
+      <classpath refid="content-view-service.module.classpath"/>
+      <src refid="content-view-service.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.content-view-service"/>
+    </javac>
+    
+    <copy todir="${content-view-service.testoutput.dir}">
+      <fileset dir="${module.content-view-service.basedir}/content-view-service/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.content-view-service" description="cleanup module">
+    <delete dir="${content-view-service.output.dir}"/>
+    <delete dir="${content-view-service.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module friends-list-manage-service -->
+  
+  <dirname property="module.friends-list-manage-service.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.friends-list-manage-service" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="friends-list-manage-service.output.dir" value="${module.friends-list-manage-service.basedir}/friends-list-manage-service/target/classes"/>
+  <property name="friends-list-manage-service.testoutput.dir" value="${module.friends-list-manage-service.basedir}/friends-list-manage-service/target/test-classes"/>
+  
+  <path id="friends-list-manage-service.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="friends-list-manage-service.module.production.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+  </path>
+  
+  <path id="friends-list-manage-service.runtime.production.module.classpath">
+    <pathelement location="${friends-list-manage-service.output.dir}"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="friends-list-manage-service.module.classpath">
+    <pathelement location="${friends-list-manage-service.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="friends-list-manage-service.runtime.module.classpath">
+    <pathelement location="${friends-list-manage-service.testoutput.dir}"/>
+    <pathelement location="${friends-list-manage-service.output.dir}"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.friends-list-manage-service">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.friends-list-manage-service">
+    <patternset refid="excluded.from.module.friends-list-manage-service"/>
+  </patternset>
+  
+  <path id="friends-list-manage-service.module.sourcepath">
+    <dirset dir="${module.friends-list-manage-service.basedir}/friends-list-manage-service">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="friends-list-manage-service.module.test.sourcepath">
+    <dirset dir="${module.friends-list-manage-service.basedir}/friends-list-manage-service">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.friends-list-manage-service" depends="compile.module.friends-list-manage-service.production,compile.module.friends-list-manage-service.tests" description="Compile module friends-list-manage-service"/>
+  
+  <target name="compile.module.friends-list-manage-service.production" depends="compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database" description="Compile module friends-list-manage-service; production classes">
+    <mkdir dir="${friends-list-manage-service.output.dir}"/>
+    <javac destdir="${friends-list-manage-service.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.friends-list-manage-service}"/>
+      <bootclasspath refid="friends-list-manage-service.module.bootclasspath"/>
+      <classpath refid="friends-list-manage-service.module.production.classpath"/>
+      <src refid="friends-list-manage-service.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.friends-list-manage-service"/>
+    </javac>
+    
+    <copy todir="${friends-list-manage-service.output.dir}">
+      <fileset dir="${module.friends-list-manage-service.basedir}/friends-list-manage-service/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.friends-list-manage-service.basedir}/friends-list-manage-service/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.friends-list-manage-service.tests" depends="compile.module.friends-list-manage-service.production" description="compile module friends-list-manage-service; test classes" unless="skip.tests">
+    <mkdir dir="${friends-list-manage-service.testoutput.dir}"/>
+    <javac destdir="${friends-list-manage-service.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.friends-list-manage-service}"/>
+      <bootclasspath refid="friends-list-manage-service.module.bootclasspath"/>
+      <classpath refid="friends-list-manage-service.module.classpath"/>
+      <src refid="friends-list-manage-service.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.friends-list-manage-service"/>
+    </javac>
+    
+    <copy todir="${friends-list-manage-service.testoutput.dir}">
+      <fileset dir="${module.friends-list-manage-service.basedir}/friends-list-manage-service/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.friends-list-manage-service" description="cleanup module">
+    <delete dir="${friends-list-manage-service.output.dir}"/>
+    <delete dir="${friends-list-manage-service.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module gifts-service -->
+  
+  <dirname property="module.gifts-service.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.gifts-service" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="gifts-service.output.dir" value="${module.gifts-service.basedir}/gifts-service/target/classes"/>
+  <property name="gifts-service.testoutput.dir" value="${module.gifts-service.basedir}/gifts-service/target/test-classes"/>
+  
+  <path id="gifts-service.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="gifts-service.module.production.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+  </path>
+  
+  <path id="gifts-service.runtime.production.module.classpath">
+    <pathelement location="${gifts-service.output.dir}"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="gifts-service.module.classpath">
+    <pathelement location="${gifts-service.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="gifts-service.runtime.module.classpath">
+    <pathelement location="${gifts-service.testoutput.dir}"/>
+    <pathelement location="${gifts-service.output.dir}"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.gifts-service">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.gifts-service">
+    <patternset refid="excluded.from.module.gifts-service"/>
+  </patternset>
+  
+  <path id="gifts-service.module.sourcepath">
+    <dirset dir="${module.gifts-service.basedir}/gifts-service">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="gifts-service.module.test.sourcepath">
+    <dirset dir="${module.gifts-service.basedir}/gifts-service">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.gifts-service" depends="compile.module.gifts-service.production,compile.module.gifts-service.tests" description="Compile module gifts-service"/>
+  
+  <target name="compile.module.gifts-service.production" depends="compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database" description="Compile module gifts-service; production classes">
+    <mkdir dir="${gifts-service.output.dir}"/>
+    <javac destdir="${gifts-service.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.gifts-service}"/>
+      <bootclasspath refid="gifts-service.module.bootclasspath"/>
+      <classpath refid="gifts-service.module.production.classpath"/>
+      <src refid="gifts-service.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.gifts-service"/>
+    </javac>
+    
+    <copy todir="${gifts-service.output.dir}">
+      <fileset dir="${module.gifts-service.basedir}/gifts-service/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.gifts-service.basedir}/gifts-service/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.gifts-service.tests" depends="compile.module.gifts-service.production" description="compile module gifts-service; test classes" unless="skip.tests">
+    <mkdir dir="${gifts-service.testoutput.dir}"/>
+    <javac destdir="${gifts-service.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.gifts-service}"/>
+      <bootclasspath refid="gifts-service.module.bootclasspath"/>
+      <classpath refid="gifts-service.module.classpath"/>
+      <src refid="gifts-service.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.gifts-service"/>
+    </javac>
+    
+    <copy todir="${gifts-service.testoutput.dir}">
+      <fileset dir="${module.gifts-service.basedir}/gifts-service/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.gifts-service" description="cleanup module">
+    <delete dir="${gifts-service.output.dir}"/>
+    <delete dir="${gifts-service.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module profile-view-service -->
+  
+  <dirname property="module.profile-view-service.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.profile-view-service" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="profile-view-service.output.dir" value="${module.profile-view-service.basedir}/profile-view-service/target/classes"/>
+  <property name="profile-view-service.testoutput.dir" value="${module.profile-view-service.basedir}/profile-view-service/target/test-classes"/>
+  
+  <path id="profile-view-service.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="profile-view-service.module.production.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+  </path>
+  
+  <path id="profile-view-service.runtime.production.module.classpath">
+    <pathelement location="${profile-view-service.output.dir}"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="profile-view-service.module.classpath">
+    <pathelement location="${profile-view-service.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="profile-view-service.runtime.module.classpath">
+    <pathelement location="${profile-view-service.testoutput.dir}"/>
+    <pathelement location="${profile-view-service.output.dir}"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.profile-view-service">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.profile-view-service">
+    <patternset refid="excluded.from.module.profile-view-service"/>
+  </patternset>
+  
+  <path id="profile-view-service.module.sourcepath">
+    <dirset dir="${module.profile-view-service.basedir}/profile-view-service">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="profile-view-service.module.test.sourcepath">
+    <dirset dir="${module.profile-view-service.basedir}/profile-view-service">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.profile-view-service" depends="compile.module.profile-view-service.production,compile.module.profile-view-service.tests" description="Compile module profile-view-service"/>
+  
+  <target name="compile.module.profile-view-service.production" depends="compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database" description="Compile module profile-view-service; production classes">
+    <mkdir dir="${profile-view-service.output.dir}"/>
+    <javac destdir="${profile-view-service.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.profile-view-service}"/>
+      <bootclasspath refid="profile-view-service.module.bootclasspath"/>
+      <classpath refid="profile-view-service.module.production.classpath"/>
+      <src refid="profile-view-service.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.profile-view-service"/>
+    </javac>
+    
+    <copy todir="${profile-view-service.output.dir}">
+      <fileset dir="${module.profile-view-service.basedir}/profile-view-service/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.profile-view-service.basedir}/profile-view-service/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.profile-view-service.tests" depends="compile.module.profile-view-service.production" description="compile module profile-view-service; test classes" unless="skip.tests">
+    <mkdir dir="${profile-view-service.testoutput.dir}"/>
+    <javac destdir="${profile-view-service.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.profile-view-service}"/>
+      <bootclasspath refid="profile-view-service.module.bootclasspath"/>
+      <classpath refid="profile-view-service.module.classpath"/>
+      <src refid="profile-view-service.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.profile-view-service"/>
+    </javac>
+    
+    <copy todir="${profile-view-service.testoutput.dir}">
+      <fileset dir="${module.profile-view-service.basedir}/profile-view-service/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.profile-view-service" description="cleanup module">
+    <delete dir="${profile-view-service.output.dir}"/>
+    <delete dir="${profile-view-service.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module talking-service -->
+  
+  <dirname property="module.talking-service.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.talking-service" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="talking-service.output.dir" value="${module.talking-service.basedir}/talking-service/target/classes"/>
+  <property name="talking-service.testoutput.dir" value="${module.talking-service.basedir}/talking-service/target/test-classes"/>
+  
+  <path id="talking-service.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="talking-service.module.production.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+  </path>
+  
+  <path id="talking-service.runtime.production.module.classpath">
+    <pathelement location="${talking-service.output.dir}"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+    <path refid="content-server.runtime.production.module.classpath"/>
+    <path refid="applications-database.runtime.production.module.classpath"/>
+    <path refid="multimedia-database.runtime.production.module.classpath"/>
+    <path refid="talking-database.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="talking-service.module.classpath">
+    <pathelement location="${talking-service.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${content-server.testoutput.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.testoutput.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.testoutput.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.testoutput.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="talking-service.runtime.module.classpath">
+    <pathelement location="${talking-service.testoutput.dir}"/>
+    <pathelement location="${talking-service.output.dir}"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="content-server.runtime.module.classpath"/>
+    <path refid="applications-database.runtime.module.classpath"/>
+    <path refid="multimedia-database.runtime.module.classpath"/>
+    <path refid="talking-database.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.talking-service">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.talking-service">
+    <patternset refid="excluded.from.module.talking-service"/>
+  </patternset>
+  
+  <path id="talking-service.module.sourcepath">
+    <dirset dir="${module.talking-service.basedir}/talking-service">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="talking-service.module.test.sourcepath">
+    <dirset dir="${module.talking-service.basedir}/talking-service">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.talking-service" depends="compile.module.talking-service.production,compile.module.talking-service.tests" description="Compile module talking-service"/>
+  
+  <target name="compile.module.talking-service.production" depends="compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database,compile.module.content-server,compile.module.applications-database,compile.module.multimedia-database,compile.module.talking-database" description="Compile module talking-service; production classes">
+    <mkdir dir="${talking-service.output.dir}"/>
+    <javac destdir="${talking-service.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.talking-service}"/>
+      <bootclasspath refid="talking-service.module.bootclasspath"/>
+      <classpath refid="talking-service.module.production.classpath"/>
+      <src refid="talking-service.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.talking-service"/>
+    </javac>
+    
+    <copy todir="${talking-service.output.dir}">
+      <fileset dir="${module.talking-service.basedir}/talking-service/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.talking-service.basedir}/talking-service/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.talking-service.tests" depends="compile.module.talking-service.production" description="compile module talking-service; test classes" unless="skip.tests">
+    <mkdir dir="${talking-service.testoutput.dir}"/>
+    <javac destdir="${talking-service.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.talking-service}"/>
+      <bootclasspath refid="talking-service.module.bootclasspath"/>
+      <classpath refid="talking-service.module.classpath"/>
+      <src refid="talking-service.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.talking-service"/>
+    </javac>
+    
+    <copy todir="${talking-service.testoutput.dir}">
+      <fileset dir="${module.talking-service.basedir}/talking-service/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.talking-service" description="cleanup module">
+    <delete dir="${talking-service.output.dir}"/>
+    <delete dir="${talking-service.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module content-manage-service -->
+  
+  <dirname property="module.content-manage-service.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.content-manage-service" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="content-manage-service.output.dir" value="${module.content-manage-service.basedir}/content-manage-service/target/classes"/>
+  <property name="content-manage-service.testoutput.dir" value="${module.content-manage-service.basedir}/content-manage-service/target/test-classes"/>
+  
+  <path id="content-manage-service.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="content-manage-service.module.production.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <pathelement location="${content-view-service.output.dir}"/>
+  </path>
+  
+  <path id="content-manage-service.runtime.production.module.classpath">
+    <pathelement location="${content-manage-service.output.dir}"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+    <path refid="content-server.runtime.production.module.classpath"/>
+    <path refid="applications-database.runtime.production.module.classpath"/>
+    <path refid="multimedia-database.runtime.production.module.classpath"/>
+    <path refid="talking-database.runtime.production.module.classpath"/>
+    <path refid="content-view-service.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="content-manage-service.module.classpath">
+    <pathelement location="${content-manage-service.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${content-server.testoutput.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.testoutput.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.testoutput.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.testoutput.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <pathelement location="${content-view-service.testoutput.dir}"/>
+    <pathelement location="${content-view-service.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="content-manage-service.runtime.module.classpath">
+    <pathelement location="${content-manage-service.testoutput.dir}"/>
+    <pathelement location="${content-manage-service.output.dir}"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="content-server.runtime.module.classpath"/>
+    <path refid="applications-database.runtime.module.classpath"/>
+    <path refid="multimedia-database.runtime.module.classpath"/>
+    <path refid="talking-database.runtime.module.classpath"/>
+    <path refid="content-view-service.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.content-manage-service">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.content-manage-service">
+    <patternset refid="excluded.from.module.content-manage-service"/>
+  </patternset>
+  
+  <path id="content-manage-service.module.sourcepath">
+    <dirset dir="${module.content-manage-service.basedir}/content-manage-service">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="content-manage-service.module.test.sourcepath">
+    <dirset dir="${module.content-manage-service.basedir}/content-manage-service">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.content-manage-service" depends="compile.module.content-manage-service.production,compile.module.content-manage-service.tests" description="Compile module content-manage-service"/>
+  
+  <target name="compile.module.content-manage-service.production" depends="compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database,compile.module.content-server,compile.module.applications-database,compile.module.multimedia-database,compile.module.talking-database,compile.module.content-view-service" description="Compile module content-manage-service; production classes">
+    <mkdir dir="${content-manage-service.output.dir}"/>
+    <javac destdir="${content-manage-service.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.content-manage-service}"/>
+      <bootclasspath refid="content-manage-service.module.bootclasspath"/>
+      <classpath refid="content-manage-service.module.production.classpath"/>
+      <src refid="content-manage-service.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.content-manage-service"/>
+    </javac>
+    
+    <copy todir="${content-manage-service.output.dir}">
+      <fileset dir="${module.content-manage-service.basedir}/content-manage-service/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.content-manage-service.basedir}/content-manage-service/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.content-manage-service.tests" depends="compile.module.content-manage-service.production" description="compile module content-manage-service; test classes" unless="skip.tests">
+    <mkdir dir="${content-manage-service.testoutput.dir}"/>
+    <javac destdir="${content-manage-service.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.content-manage-service}"/>
+      <bootclasspath refid="content-manage-service.module.bootclasspath"/>
+      <classpath refid="content-manage-service.module.classpath"/>
+      <src refid="content-manage-service.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.content-manage-service"/>
+    </javac>
+    
+    <copy todir="${content-manage-service.testoutput.dir}">
+      <fileset dir="${module.content-manage-service.basedir}/content-manage-service/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.content-manage-service" description="cleanup module">
+    <delete dir="${content-manage-service.output.dir}"/>
+    <delete dir="${content-manage-service.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module service-provider -->
+  
+  <dirname property="module.service-provider.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.service-provider" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="service-provider.output.dir" value="${module.service-provider.basedir}/service-provider/target/classes"/>
+  <property name="service-provider.testoutput.dir" value="${module.service-provider.basedir}/service-provider/target/test-classes"/>
+  
+  <path id="service-provider.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="service-provider.module.production.classpath">
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${authorization-service.output.dir}"/>
+    <pathelement location="${friends-list-manage-service.output.dir}"/>
+    <pathelement location="${gifts-service.output.dir}"/>
+    <pathelement location="${profile-view-service.output.dir}"/>
+    <pathelement location="${content-manage-service.output.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <pathelement location="${content-view-service.output.dir}"/>
+    <pathelement location="${applications-service.output.dir}"/>
+    <pathelement location="${talking-service.output.dir}"/>
+  </path>
+  
+  <path id="service-provider.runtime.production.module.classpath">
+    <pathelement location="${service-provider.output.dir}"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+    <path refid="authorization-service.runtime.production.module.classpath"/>
+    <path refid="friends-list-manage-service.runtime.production.module.classpath"/>
+    <path refid="gifts-service.runtime.production.module.classpath"/>
+    <path refid="profile-view-service.runtime.production.module.classpath"/>
+    <path refid="content-manage-service.runtime.production.module.classpath"/>
+    <path refid="content-server.runtime.production.module.classpath"/>
+    <path refid="applications-database.runtime.production.module.classpath"/>
+    <path refid="multimedia-database.runtime.production.module.classpath"/>
+    <path refid="talking-database.runtime.production.module.classpath"/>
+    <path refid="content-view-service.runtime.production.module.classpath"/>
+    <path refid="applications-service.runtime.production.module.classpath"/>
+    <path refid="talking-service.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="service-provider.module.classpath">
+    <pathelement location="${service-provider.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${authorization-service.testoutput.dir}"/>
+    <pathelement location="${authorization-service.output.dir}"/>
+    <pathelement location="${friends-list-manage-service.testoutput.dir}"/>
+    <pathelement location="${friends-list-manage-service.output.dir}"/>
+    <pathelement location="${gifts-service.testoutput.dir}"/>
+    <pathelement location="${gifts-service.output.dir}"/>
+    <pathelement location="${profile-view-service.testoutput.dir}"/>
+    <pathelement location="${profile-view-service.output.dir}"/>
+    <pathelement location="${content-manage-service.testoutput.dir}"/>
+    <pathelement location="${content-manage-service.output.dir}"/>
+    <pathelement location="${content-server.testoutput.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.testoutput.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.testoutput.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.testoutput.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <pathelement location="${content-view-service.testoutput.dir}"/>
+    <pathelement location="${content-view-service.output.dir}"/>
+    <pathelement location="${applications-service.testoutput.dir}"/>
+    <pathelement location="${applications-service.output.dir}"/>
+    <pathelement location="${talking-service.testoutput.dir}"/>
+    <pathelement location="${talking-service.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="service-provider.runtime.module.classpath">
+    <pathelement location="${service-provider.testoutput.dir}"/>
+    <pathelement location="${service-provider.output.dir}"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="authorization-service.runtime.module.classpath"/>
+    <path refid="friends-list-manage-service.runtime.module.classpath"/>
+    <path refid="gifts-service.runtime.module.classpath"/>
+    <path refid="profile-view-service.runtime.module.classpath"/>
+    <path refid="content-manage-service.runtime.module.classpath"/>
+    <path refid="content-server.runtime.module.classpath"/>
+    <path refid="applications-database.runtime.module.classpath"/>
+    <path refid="multimedia-database.runtime.module.classpath"/>
+    <path refid="talking-database.runtime.module.classpath"/>
+    <path refid="content-view-service.runtime.module.classpath"/>
+    <path refid="applications-service.runtime.module.classpath"/>
+    <path refid="talking-service.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.service-provider">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.service-provider">
+    <patternset refid="excluded.from.module.service-provider"/>
+  </patternset>
+  
+  <path id="service-provider.module.sourcepath">
+    <dirset dir="${module.service-provider.basedir}/service-provider">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="service-provider.module.test.sourcepath">
+    <dirset dir="${module.service-provider.basedir}/service-provider">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.service-provider" depends="compile.module.service-provider.production,compile.module.service-provider.tests" description="Compile module service-provider"/>
+  
+  <target name="compile.module.service-provider.production" depends="compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database,compile.module.authorization-service,compile.module.friends-list-manage-service,compile.module.gifts-service,compile.module.profile-view-service,compile.module.content-manage-service,compile.module.content-server,compile.module.applications-database,compile.module.multimedia-database,compile.module.talking-database,compile.module.content-view-service,compile.module.applications-service,compile.module.talking-service" description="Compile module service-provider; production classes">
+    <mkdir dir="${service-provider.output.dir}"/>
+    <javac destdir="${service-provider.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.service-provider}"/>
+      <bootclasspath refid="service-provider.module.bootclasspath"/>
+      <classpath refid="service-provider.module.production.classpath"/>
+      <src refid="service-provider.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.service-provider"/>
+    </javac>
+    
+    <copy todir="${service-provider.output.dir}">
+      <fileset dir="${module.service-provider.basedir}/service-provider/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.service-provider.basedir}/service-provider/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.service-provider.tests" depends="compile.module.service-provider.production" description="compile module service-provider; test classes" unless="skip.tests">
+    <mkdir dir="${service-provider.testoutput.dir}"/>
+    <javac destdir="${service-provider.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.service-provider}"/>
+      <bootclasspath refid="service-provider.module.bootclasspath"/>
+      <classpath refid="service-provider.module.classpath"/>
+      <src refid="service-provider.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.service-provider"/>
+    </javac>
+    
+    <copy todir="${service-provider.testoutput.dir}">
+      <fileset dir="${module.service-provider.basedir}/service-provider/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.service-provider" description="cleanup module">
+    <delete dir="${service-provider.output.dir}"/>
+    <delete dir="${service-provider.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module mobile-client -->
+  
+  <dirname property="module.mobile-client.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.mobile-client" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="mobile-client.output.dir" value="${module.mobile-client.basedir}/mobile-client/target/classes"/>
+  <property name="mobile-client.testoutput.dir" value="${module.mobile-client.basedir}/mobile-client/target/test-classes"/>
+  
+  <path id="mobile-client.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="mobile-client.module.production.classpath">
+    <pathelement location="${service-provider.output.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${authorization-service.output.dir}"/>
+    <pathelement location="${friends-list-manage-service.output.dir}"/>
+    <pathelement location="${gifts-service.output.dir}"/>
+    <pathelement location="${profile-view-service.output.dir}"/>
+    <pathelement location="${content-manage-service.output.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <pathelement location="${content-view-service.output.dir}"/>
+    <pathelement location="${applications-service.output.dir}"/>
+    <pathelement location="${talking-service.output.dir}"/>
+  </path>
+  
+  <path id="mobile-client.runtime.production.module.classpath">
+    <pathelement location="${mobile-client.output.dir}"/>
+    <path refid="service-provider.runtime.production.module.classpath"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+    <path refid="authorization-service.runtime.production.module.classpath"/>
+    <path refid="friends-list-manage-service.runtime.production.module.classpath"/>
+    <path refid="gifts-service.runtime.production.module.classpath"/>
+    <path refid="profile-view-service.runtime.production.module.classpath"/>
+    <path refid="content-manage-service.runtime.production.module.classpath"/>
+    <path refid="content-server.runtime.production.module.classpath"/>
+    <path refid="applications-database.runtime.production.module.classpath"/>
+    <path refid="multimedia-database.runtime.production.module.classpath"/>
+    <path refid="talking-database.runtime.production.module.classpath"/>
+    <path refid="content-view-service.runtime.production.module.classpath"/>
+    <path refid="applications-service.runtime.production.module.classpath"/>
+    <path refid="talking-service.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="mobile-client.module.classpath">
+    <pathelement location="${mobile-client.output.dir}"/>
+    <pathelement location="${service-provider.testoutput.dir}"/>
+    <pathelement location="${service-provider.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${authorization-service.testoutput.dir}"/>
+    <pathelement location="${authorization-service.output.dir}"/>
+    <pathelement location="${friends-list-manage-service.testoutput.dir}"/>
+    <pathelement location="${friends-list-manage-service.output.dir}"/>
+    <pathelement location="${gifts-service.testoutput.dir}"/>
+    <pathelement location="${gifts-service.output.dir}"/>
+    <pathelement location="${profile-view-service.testoutput.dir}"/>
+    <pathelement location="${profile-view-service.output.dir}"/>
+    <pathelement location="${content-manage-service.testoutput.dir}"/>
+    <pathelement location="${content-manage-service.output.dir}"/>
+    <pathelement location="${content-server.testoutput.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.testoutput.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.testoutput.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.testoutput.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <pathelement location="${content-view-service.testoutput.dir}"/>
+    <pathelement location="${content-view-service.output.dir}"/>
+    <pathelement location="${applications-service.testoutput.dir}"/>
+    <pathelement location="${applications-service.output.dir}"/>
+    <pathelement location="${talking-service.testoutput.dir}"/>
+    <pathelement location="${talking-service.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="mobile-client.runtime.module.classpath">
+    <pathelement location="${mobile-client.testoutput.dir}"/>
+    <pathelement location="${mobile-client.output.dir}"/>
+    <path refid="service-provider.runtime.module.classpath"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="authorization-service.runtime.module.classpath"/>
+    <path refid="friends-list-manage-service.runtime.module.classpath"/>
+    <path refid="gifts-service.runtime.module.classpath"/>
+    <path refid="profile-view-service.runtime.module.classpath"/>
+    <path refid="content-manage-service.runtime.module.classpath"/>
+    <path refid="content-server.runtime.module.classpath"/>
+    <path refid="applications-database.runtime.module.classpath"/>
+    <path refid="multimedia-database.runtime.module.classpath"/>
+    <path refid="talking-database.runtime.module.classpath"/>
+    <path refid="content-view-service.runtime.module.classpath"/>
+    <path refid="applications-service.runtime.module.classpath"/>
+    <path refid="talking-service.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.mobile-client">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.mobile-client">
+    <patternset refid="excluded.from.module.mobile-client"/>
+  </patternset>
+  
+  <path id="mobile-client.module.sourcepath">
+    <dirset dir="${module.mobile-client.basedir}/mobile-client">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="mobile-client.module.test.sourcepath">
+    <dirset dir="${module.mobile-client.basedir}/mobile-client">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.mobile-client" depends="compile.module.mobile-client.production,compile.module.mobile-client.tests" description="Compile module mobile-client"/>
+  
+  <target name="compile.module.mobile-client.production" depends="compile.module.service-provider,compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database,compile.module.authorization-service,compile.module.friends-list-manage-service,compile.module.gifts-service,compile.module.profile-view-service,compile.module.content-manage-service,compile.module.content-server,compile.module.applications-database,compile.module.multimedia-database,compile.module.talking-database,compile.module.content-view-service,compile.module.applications-service,compile.module.talking-service" description="Compile module mobile-client; production classes">
+    <mkdir dir="${mobile-client.output.dir}"/>
+    <javac destdir="${mobile-client.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.mobile-client}"/>
+      <bootclasspath refid="mobile-client.module.bootclasspath"/>
+      <classpath refid="mobile-client.module.production.classpath"/>
+      <src refid="mobile-client.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.mobile-client"/>
+    </javac>
+    
+    <copy todir="${mobile-client.output.dir}">
+      <fileset dir="${module.mobile-client.basedir}/mobile-client/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.mobile-client.basedir}/mobile-client/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.mobile-client.tests" depends="compile.module.mobile-client.production" description="compile module mobile-client; test classes" unless="skip.tests">
+    <mkdir dir="${mobile-client.testoutput.dir}"/>
+    <javac destdir="${mobile-client.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.mobile-client}"/>
+      <bootclasspath refid="mobile-client.module.bootclasspath"/>
+      <classpath refid="mobile-client.module.classpath"/>
+      <src refid="mobile-client.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.mobile-client"/>
+    </javac>
+    
+    <copy todir="${mobile-client.testoutput.dir}">
+      <fileset dir="${module.mobile-client.basedir}/mobile-client/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.mobile-client" description="cleanup module">
+    <delete dir="${mobile-client.output.dir}"/>
+    <delete dir="${mobile-client.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module web-client -->
+  
+  <dirname property="module.web-client.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.web-client" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="web-client.output.dir" value="${module.web-client.basedir}/web-client/target/classes"/>
+  <property name="web-client.testoutput.dir" value="${module.web-client.basedir}/web-client/target/test-classes"/>
+  
+  <path id="web-client.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="web-client.module.production.classpath">
+    <pathelement location="${service-provider.output.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${authorization-service.output.dir}"/>
+    <pathelement location="${friends-list-manage-service.output.dir}"/>
+    <pathelement location="${gifts-service.output.dir}"/>
+    <pathelement location="${profile-view-service.output.dir}"/>
+    <pathelement location="${content-manage-service.output.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <pathelement location="${content-view-service.output.dir}"/>
+    <pathelement location="${applications-service.output.dir}"/>
+    <pathelement location="${talking-service.output.dir}"/>
+  </path>
+  
+  <path id="web-client.runtime.production.module.classpath">
+    <pathelement location="${web-client.output.dir}"/>
+    <path refid="service-provider.runtime.production.module.classpath"/>
+    <path refid="authentication-service.runtime.production.module.classpath"/>
+    <path refid="account-server.runtime.production.module.classpath"/>
+    <path refid="accounts-database.runtime.production.module.classpath"/>
+    <path refid="profiles-database.runtime.production.module.classpath"/>
+    <path refid="authorization-service.runtime.production.module.classpath"/>
+    <path refid="friends-list-manage-service.runtime.production.module.classpath"/>
+    <path refid="gifts-service.runtime.production.module.classpath"/>
+    <path refid="profile-view-service.runtime.production.module.classpath"/>
+    <path refid="content-manage-service.runtime.production.module.classpath"/>
+    <path refid="content-server.runtime.production.module.classpath"/>
+    <path refid="applications-database.runtime.production.module.classpath"/>
+    <path refid="multimedia-database.runtime.production.module.classpath"/>
+    <path refid="talking-database.runtime.production.module.classpath"/>
+    <path refid="content-view-service.runtime.production.module.classpath"/>
+    <path refid="applications-service.runtime.production.module.classpath"/>
+    <path refid="talking-service.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="web-client.module.classpath">
+    <pathelement location="${web-client.output.dir}"/>
+    <pathelement location="${service-provider.testoutput.dir}"/>
+    <pathelement location="${service-provider.output.dir}"/>
+    <pathelement location="${authentication-service.testoutput.dir}"/>
+    <pathelement location="${authentication-service.output.dir}"/>
+    <pathelement location="${account-server.testoutput.dir}"/>
+    <pathelement location="${account-server.output.dir}"/>
+    <pathelement location="${accounts-database.testoutput.dir}"/>
+    <pathelement location="${accounts-database.output.dir}"/>
+    <pathelement location="${profiles-database.testoutput.dir}"/>
+    <pathelement location="${profiles-database.output.dir}"/>
+    <pathelement location="${authorization-service.testoutput.dir}"/>
+    <pathelement location="${authorization-service.output.dir}"/>
+    <pathelement location="${friends-list-manage-service.testoutput.dir}"/>
+    <pathelement location="${friends-list-manage-service.output.dir}"/>
+    <pathelement location="${gifts-service.testoutput.dir}"/>
+    <pathelement location="${gifts-service.output.dir}"/>
+    <pathelement location="${profile-view-service.testoutput.dir}"/>
+    <pathelement location="${profile-view-service.output.dir}"/>
+    <pathelement location="${content-manage-service.testoutput.dir}"/>
+    <pathelement location="${content-manage-service.output.dir}"/>
+    <pathelement location="${content-server.testoutput.dir}"/>
+    <pathelement location="${content-server.output.dir}"/>
+    <pathelement location="${applications-database.testoutput.dir}"/>
+    <pathelement location="${applications-database.output.dir}"/>
+    <pathelement location="${multimedia-database.testoutput.dir}"/>
+    <pathelement location="${multimedia-database.output.dir}"/>
+    <pathelement location="${talking-database.testoutput.dir}"/>
+    <pathelement location="${talking-database.output.dir}"/>
+    <pathelement location="${content-view-service.testoutput.dir}"/>
+    <pathelement location="${content-view-service.output.dir}"/>
+    <pathelement location="${applications-service.testoutput.dir}"/>
+    <pathelement location="${applications-service.output.dir}"/>
+    <pathelement location="${talking-service.testoutput.dir}"/>
+    <pathelement location="${talking-service.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  <path id="web-client.runtime.module.classpath">
+    <pathelement location="${web-client.testoutput.dir}"/>
+    <pathelement location="${web-client.output.dir}"/>
+    <path refid="service-provider.runtime.module.classpath"/>
+    <path refid="authentication-service.runtime.module.classpath"/>
+    <path refid="account-server.runtime.module.classpath"/>
+    <path refid="accounts-database.runtime.module.classpath"/>
+    <path refid="profiles-database.runtime.module.classpath"/>
+    <path refid="authorization-service.runtime.module.classpath"/>
+    <path refid="friends-list-manage-service.runtime.module.classpath"/>
+    <path refid="gifts-service.runtime.module.classpath"/>
+    <path refid="profile-view-service.runtime.module.classpath"/>
+    <path refid="content-manage-service.runtime.module.classpath"/>
+    <path refid="content-server.runtime.module.classpath"/>
+    <path refid="applications-database.runtime.module.classpath"/>
+    <path refid="multimedia-database.runtime.module.classpath"/>
+    <path refid="talking-database.runtime.module.classpath"/>
+    <path refid="content-view-service.runtime.module.classpath"/>
+    <path refid="applications-service.runtime.module.classpath"/>
+    <path refid="talking-service.runtime.module.classpath"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.mockito:mockito-all:1.9.5.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.web-client">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.web-client">
+    <patternset refid="excluded.from.module.web-client"/>
+  </patternset>
+  
+  <path id="web-client.module.sourcepath">
+    <dirset dir="${module.web-client.basedir}/web-client">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="web-client.module.test.sourcepath">
+    <dirset dir="${module.web-client.basedir}/web-client">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.web-client" depends="compile.module.web-client.production,compile.module.web-client.tests" description="Compile module web-client"/>
+  
+  <target name="compile.module.web-client.production" depends="compile.module.service-provider,compile.module.authentication-service,compile.module.account-server,compile.module.accounts-database,compile.module.profiles-database,compile.module.authorization-service,compile.module.friends-list-manage-service,compile.module.gifts-service,compile.module.profile-view-service,compile.module.content-manage-service,compile.module.content-server,compile.module.applications-database,compile.module.multimedia-database,compile.module.talking-database,compile.module.content-view-service,compile.module.applications-service,compile.module.talking-service" description="Compile module web-client; production classes">
+    <mkdir dir="${web-client.output.dir}"/>
+    <javac destdir="${web-client.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.web-client}"/>
+      <bootclasspath refid="web-client.module.bootclasspath"/>
+      <classpath refid="web-client.module.production.classpath"/>
+      <src refid="web-client.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.web-client"/>
+    </javac>
+    
+    <copy todir="${web-client.output.dir}">
+      <fileset dir="${module.web-client.basedir}/web-client/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.web-client.basedir}/web-client/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.web-client.tests" depends="compile.module.web-client.production" description="compile module web-client; test classes" unless="skip.tests">
+    <mkdir dir="${web-client.testoutput.dir}"/>
+    <javac destdir="${web-client.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.web-client}"/>
+      <bootclasspath refid="web-client.module.bootclasspath"/>
+      <classpath refid="web-client.module.classpath"/>
+      <src refid="web-client.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.web-client"/>
+    </javac>
+    
+    <copy todir="${web-client.testoutput.dir}">
+      <fileset dir="${module.web-client.basedir}/web-client/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.web-client" description="cleanup module">
+    <delete dir="${web-client.output.dir}"/>
+    <delete dir="${web-client.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.accounts-database, clean.module.applications-database, clean.module.multimedia-database, clean.module.profiles-database, clean.module.socialnetwork, clean.module.talking-database, clean.module.account-server, clean.module.content-server, clean.module.authentication-service, clean.module.authorization-service, clean.module.applications-service, clean.module.content-view-service, clean.module.friends-list-manage-service, clean.module.gifts-service, clean.module.profile-view-service, clean.module.talking-service, clean.module.content-manage-service, clean.module.service-provider, clean.module.mobile-client, clean.module.web-client" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.accounts-database, compile.module.applications-database, compile.module.multimedia-database, compile.module.profiles-database, compile.module.socialnetwork, compile.module.talking-database, compile.module.account-server, compile.module.content-server, compile.module.authentication-service, compile.module.authorization-service, compile.module.applications-service, compile.module.content-view-service, compile.module.friends-list-manage-service, compile.module.gifts-service, compile.module.profile-view-service, compile.module.talking-service, compile.module.content-manage-service, compile.module.service-provider, compile.module.mobile-client, compile.module.web-client" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
