@@ -9,12 +9,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class TestAccountServer {
     @Mock
     AccountsBase accountsBase;
-    @Mock
     ProfilesBase profilesBase;
     @Mock
     AccountServerImpl accountServer;
@@ -35,8 +35,22 @@ public class TestAccountServer {
     }
 
     @Test
-    public void WromgpasswordCheckTest() {
+    public void WrongPasswordCheckTest() {
         assertEquals(false, accountServer.securePasswordCheck("1", "cba321"));
+    }
+
+    @Test
+    public void alternativeCheckTest() {
+        accountServer = mock(AccountServerImpl.class);
+        when(accountServer.securePasswordCheck("hash", "salt")).thenReturn(true);
+        assertEquals(true, accountServer.securePasswordCheck("hash", "salt"));
+    }
+
+    @Test
+    public void alternativeWrongCheckTest() {
+        accountServer = mock(AccountServerImpl.class);
+        when(accountServer.securePasswordCheck("hash", "salt")).thenReturn(false);
+        assertEquals(false, accountServer.securePasswordCheck("hash", "salt"));
     }
 }
 

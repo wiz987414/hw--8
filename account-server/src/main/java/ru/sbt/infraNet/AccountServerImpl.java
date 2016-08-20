@@ -2,6 +2,7 @@ package ru.sbt.infraNet;
 
 import java.net.URL;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 public class AccountServerImpl implements SecureAuthentication, AccountsServer {
@@ -18,7 +19,7 @@ public class AccountServerImpl implements SecureAuthentication, AccountsServer {
     @Override
     public boolean securePasswordCheck(String passwordHash, String saltHash) {
         boolean checkStatus = false;
-        for (UserAccount checkAccount : this.usersAccounts.getAccountsBase())
+        for (UserAccount checkAccount : this.getUsersAccounts().getAccountsBase())
             if (Objects.equals(checkAccount.getUserPassHash(), passwordHash) &&
                     Objects.equals(checkAccount.getUserSaultHash(), saltHash))
                 checkStatus = true;
